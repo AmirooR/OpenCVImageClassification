@@ -1,13 +1,16 @@
 OPENCV_CFLAGS=`pkg-config --cflags opencv` -I/opt/local/include/opencv2
 OPENCV_LFLAGS=`pkg-config --libs opencv`
 
-all: acc testRead runKmeans kdtreeIndex
+all: acc testRead runKmeans kdtreeIndex writeLibSvm
 
 acc: drwnHOGFeatures.o AccumulateFeatures.cpp FeatureExtractor.h DataSetReader.h
 	g++ -g -O3 -m32 ${OPENCV_CFLAGS} ${OPENCV_LFLAGS}  drwnHOGFeatures.o AccumulateFeatures.cpp -o acc
 
 testRead: testRead.cpp
 	g++ -g  ${OPENCV_CFLAGS} ${OPENCV_LFLAGS} testRead.cpp -o testRead
+
+writeLibSvm: writeLibSvm.cpp util.h
+	g++ -g  ${OPENCV_CFLAGS} ${OPENCV_LFLAGS} writeLibSvm.cpp -o writeLibSvm
 
 runKmeans: runKmeans.cpp
 	g++ -g  ${OPENCV_CFLAGS} ${OPENCV_LFLAGS} runKmeans.cpp -o runKmeans
