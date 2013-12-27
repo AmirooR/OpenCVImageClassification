@@ -64,16 +64,18 @@ map<string, int> readLabels(string root, vector<string>& labels_files, vector<in
 	//TODO: ugly 
 	assert( labels.size() == labels_files.size() );
 	map<string, int> labels_names;
-	for(int i = 0; i < labels_names.size(); i++)
+	for(int i = 0; i < labels_files.size(); i++)
 	{
 		string file_path = root + labels_files[i];
-		fd = fopen( file_path.c_str(), "r");
+		FILE* fd = fopen( file_path.c_str(), "r");
 		char name[32] = {0};
 		while( fscanf(fd,"%s",name) > 0 )
 		{
 			string thisName(name);
+			cerr<<thisName<<" "<<labels[i]<<endl;
 			labels_names[thisName] = labels[i];
 		}
+		fclose(fd);
 	}
 
 	return labels_names;
@@ -109,7 +111,7 @@ void writeLIBSVMFormat( map<string, int>& names_labels, map<string, vector<float
 			fprintf(fd,"%d ",label);
 			for(int i = 0; i < code.size(); i+=2)
 			{
-				fprintf(fd,"%d:%f ", (int)code[i], code[i+1]);
+				fprintf(fd,"%d:%.8f ", (int)code[i], code[i+1]);
 			}
 			fprintf(fd,"\n");
 		}
