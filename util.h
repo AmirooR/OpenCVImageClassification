@@ -131,4 +131,27 @@ void writePartialLicensesLIBSVMFormat( string filename)
 	map<string, vector<float> > codes = readCodesVec("allCodes.yml"); 
 	writeLIBSVMFormat( labels, codes, filename);
 }
+
+void writePartialUnlabeledLicensesLIBSVMFormatAndNames(string filename, string names_file)
+{
+	string root("/Users/amirrahimi/temp/Gomrok/data/isLicense/partial_not_labeled/");
+	vector<string> labels_files;
+	vector<int> labels;
+
+	labels_files.push_back("imgList.txt");
+	labels.push_back(-1);
+
+	map<string,int> labelsMap = readLabels(root, labels_files, labels);
+	map<string, vector<float> > codes = readCodesVec("otherCodes.yml"); 
+	writeLIBSVMFormat( labelsMap, codes, filename);
+	map< string, vector<float> >::iterator iter;
+
+	FILE* fd = fopen(names_file.c_str(), "w");
+	for(iter = codes.begin(); iter != codes.end(); ++iter)
+	{
+		string thisName = iter->first;
+		fprintf(fd,"%s\n",thisName.c_str());
+	}
+	fclose(fd);
+}
 #endif

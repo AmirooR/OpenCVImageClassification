@@ -104,11 +104,14 @@ int main()
 	int n_kdd = 1;
 	string centers_path("allCenters.yml");
 
-	DataSetReader* dsReader = new DirReader("/Users/amirrahimi/temp/Gomrok/data/isLicense/partialAll/",
+	/*use this for partial training
+	  DataSetReader* dsReader = new DirReader("/Users/amirrahimi/temp/Gomrok/data/isLicense/partialAll/",
 			"imgList.txt", 
-//			2);
-			2926);
+			2926);*/
 
+	DataSetReader* dsReader = new DirReader("/Users/amirrahimi/temp/Gomrok/data/isLicense/partial_not_labeled/",
+			"imgList.txt", 
+			4223);
 	FeatureExtractor* fextractor = new HOGFeatureExtractor();
 
 //	flann::Index index = trainKdtree("allCenters.yml", n_kdd);
@@ -150,7 +153,9 @@ int main()
 	cout<< "\t\t\tdone!"<<endl;
 	cout<< "Writing Results ... ";
 
-	writeAllCodes( allNames, allCodes, "allCodes.yml");
+	// use this for partial training writeAllCodes( allNames, allCodes, "allCodes.yml");
+
+	writeAllCodes( allNames, allCodes, "otherCodes.yml");
 
 	cout<< "\t\t\tdone!"<<endl;
 	delete dsReader;
