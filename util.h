@@ -1,6 +1,6 @@
 #ifndef __UTIL_H_
 #define __UTIL_H_
-
+//TODO: May I change the fopen to fstream versions?
 #include <iostream>
 #include <stdio.h>
 #include <string>
